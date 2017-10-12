@@ -150,19 +150,13 @@ head(Heroes)
 ```
 
 ```
-##      Name    Type                     Tags        Mode ElimRatio OnFire   PickRate WinRate
-## 1     Ana Support                   Healer   Quickplay      1.27   7.4%   4.07% 100.00%
-## 2     Ana Support                   Healer Competitive      1.28  11.9%
-## 3 Bastion Defense  High Damage, Stationary   Quickplay      2.59  14.6%
-## 4 Bastion Defense  High Damage, Stationary Competitive      2.61  20.4%
-## 5    D.Va    Tank                Disruptor   Quickplay      3.72   9.1%
-## 6    D.Va    Tank                Disruptor Competitive      3.88  11.1%
+##      Name    Type                     Tags        Mode ElimRatio OnFire PickRate WinRate
+## 1     Ana Support                   Healer   Quickplay      1.27   7.4%    4.07% 100.00%
+## 2     Ana Support                   Healer Competitive      1.28  11.9%    4.60%  43.68%
+## 3 Bastion Defense  High Damage, Stationary   Quickplay      2.59  14.6%    0.70%  99.96%
+## 4 Bastion Defense  High Damage, Stationary Competitive      2.61  20.4%    0.64%  50.61%
+## 5    D.Va    Tank                Disruptor   Quickplay      3.72   9.1%    4.90% 100.01%
+## 6    D.Va    Tank                Disruptor Competitive      3.88  11.1%    6.61%  51.50%
 ##
-## 1 
-## 2    4.60%  43.68%
-## 3    0.70%  99.96%
-## 4    0.64%  50.61%
-## 5    4.90% 100.01%
-## 6    6.61%  51.50%
 ```
 Now we can use this data frame for analysis!

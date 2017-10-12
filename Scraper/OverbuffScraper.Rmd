@@ -1,3 +1,8 @@
+---
+output: 
+  html_document: 
+    keep_md: yes
+---
 
 ## Overbuff Scraper in R
 
@@ -12,10 +17,12 @@ This scraper may get updated as I analyze more pieces of statistics from the web
 
 For the scraper, I used the `R` package `rvest`, which makes it a lot easier to collect html data from web pages. If you don't have it, make sure to install it along with its dependencies.
 
+```{r setoptions, echo = FALSE, warning = FALSE}
+library(knitr)
+opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
 
-
-
-```r
+```{r}
 library(rvest)
 ```
 
@@ -25,8 +32,7 @@ library(rvest)
 
 The individual hero stats can be found on their own pages. They are available on the main [Overbuff heroes page]("https://www.overbuff.com/heroes"), but only by clicking through the table, which makes it impossible to extract data using the `rvest` package, which needs a specific, unique URL to access the source data. (Note: if this is untrue, contact me because I'd like to know how it can be done!)
 
-
-```r
+```{r, cache = TRUE}
 # Read the HTML on the main page
 URL <- "https://www.overbuff.com/heroes"
 AllHeroes <- read_html(URL)
@@ -38,25 +44,16 @@ HeroList <- AllHeroes %>%
   sort() %>%
   gsub("Offense|Defense|Tank|Support" , "", .) %>%
   gsub("[. \t :]", "", .) %>%
-  gsub("Ã¶", "o", .) %>%
-  gsub("Ãº", "u", .) %>%
+  gsub("ö", "o", .) %>%
+  gsub("ú", "u", .) %>%
   tolower()
 
 HeroList
 ```
 
-```
-##  [1] "ana"        "bastion"    "dva"        "doomfist"   "genji"     
-##  [6] "hanzo"      "junkrat"    "lucio"      "mccree"     "mei"       
-## [11] "mercy"      "orisa"      "pharah"     "reaper"     "reinhardt" 
-## [16] "roadhog"    "soldier76"  "sombra"     "symmetra"   "torbjorn"  
-## [21] "tracer"     "widowmaker" "winston"    "zarya"      "zenyatta"
-```
-
 Now we have a list of Hero names, all lowercase, with no special characters, ready to be used in a URL to access each individual Hero's stats. We now need to create a list of these URLs that we can access later. Apart from the hero name, the URL also includes a play mode, quickplay or competitive. I'm interested in both, so we're going to end up with a list of 50 (25 heroes x 2 game modes) web pages to access.
 
-
-```r
+```{r}
 pages <- character(0)
 modes <- c("quickplay", "competitive")
 for (i in 1:length(HeroList)){
@@ -69,10 +66,6 @@ for (i in 1:length(HeroList)){
 length(pages)
 ```
 
-```
-## [1] 50
-```
-
 ***
 
 ### Create a data frame with all the heroes and their stats
@@ -83,8 +76,7 @@ Now that we have a list of URLs to scrape the hero stats from, we'll access each
 Heroes <- (data.frame(Name=character(0), Type = character(0), Tags = character(0), Mode = character(0),
                     ElimRatio = numeric(0), OnFire = numeric(0), PickRate = numeric(0), WinRate = numeric(0)))
 
-
-```r
+```{r, cache = TRUE}
 # Create a data frame for all of the heroes
 Heroes <- (data.frame(Name=character(0), Type = character(0), Tags = character(0), Mode = character(0),
                     ElimRatio = numeric(0), OnFire = numeric(0), PickRate = numeric(0), WinRate = numeric(0)))
@@ -154,19 +146,4 @@ save(Heroes, file = paste0("Heroes_", format(Sys.Date(), "%m-%d-%Y"), ".Rda"))
 head(Heroes)
 ```
 
-```
-##      Name    Type                     Tags        Mode ElimRatio OnFire
-## 1     Ana Support                   Healer   Quickplay      1.27   7.4%
-## 2     Ana Support                   Healer Competitive      1.28  11.9%
-## 3 Bastion Defense  High Damage, Stationary   Quickplay      2.59  14.6%
-## 4 Bastion Defense  High Damage, Stationary Competitive      2.61  20.4%
-## 5    D.Va    Tank                Disruptor   Quickplay      3.72   9.1%
-## 6    D.Va    Tank                Disruptor Competitive      3.88  11.1%
-##   PickRate WinRate
-## 1    4.07% 100.00%
-## 2    4.60%  43.68%
-## 3    0.70%  99.96%
-## 4    0.64%  50.61%
-## 5    4.90% 100.01%
-## 6    6.61%  51.50%
-```
+Now we can use this for analysis!

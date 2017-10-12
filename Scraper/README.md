@@ -79,11 +79,6 @@ length(pages)
 
 Now that we have a list of URLs to scrape the hero stats from, we'll access each one individually, make a row of a data frame, and then combine all of the hero rows to create one big data frame.
 
-# Create data frame for all characters
-Heroes <- (data.frame(Name=character(0), Type = character(0), Tags = character(0), Mode = character(0),
-                    ElimRatio = numeric(0), OnFire = numeric(0), PickRate = numeric(0), WinRate = numeric(0)))
-
-
 ```r
 # Create a data frame for all of the heroes
 Heroes <- (data.frame(Name=character(0), Type = character(0), Tags = character(0), Mode = character(0),
@@ -170,3 +165,4 @@ head(Heroes)
 ## 5    4.90% 100.01%
 ## 6    6.61%  51.50%
 ```
+Now we can use this data frame for analysis!

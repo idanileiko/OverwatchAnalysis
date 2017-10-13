@@ -99,20 +99,14 @@ head(HeroQuick)
 ```
 
 ```
-##          Name    Type                Tags      Mode ElimRatio OnFire
-## 21      Mercy Support  Healer, Vulnerable Quickplay      0.40   6.1%
-## 9       Genji Offense             Flanker Quickplay      2.43  11.8%
-## 17     McCree Offense             Flanker Quickplay      2.13  11.8%
-## 43 Widowmaker Defense              Sniper Quickplay      2.35   8.9%
-## 13    Junkrat Defense         High Damage Quickplay      2.29  14.0%
-## 11      Hanzo Defense              Sniper Quickplay      2.21  12.9%
-##    PickRate WinRate Difficulty
-## 21    14.14 100.00%          1
-## 9      8.71 100.01%          3
-## 17     6.99  99.97%          2
-## 43     6.58 100.02%          2
-## 13     6.02 100.02%          2
-## 11     5.66  99.94%          3
+##          Name    Type                Tags      Mode ElimRatio OnFire PickRate WinRate Difficulty
+## 21      Mercy Support  Healer, Vulnerable Quickplay      0.40   6.1%    14.14 100.00%          1
+## 9       Genji Offense             Flanker Quickplay      2.43  11.8%     8.71 100.01%          3
+## 17     McCree Offense             Flanker Quickplay      2.13  11.8%     6.99  99.97%          2
+## 43 Widowmaker Defense              Sniper Quickplay      2.35   8.9%     6.58 100.02%          2
+## 13    Junkrat Defense         High Damage Quickplay      2.29  14.0%     6.02 100.02%          2
+## 11      Hanzo Defense              Sniper Quickplay      2.21  12.9%     5.66  99.94%          3
+## 
 ```
 
 ```r
@@ -120,20 +114,14 @@ head(HeroComp)
 ```
 
 ```
-##         Name    Type                   Tags        Mode ElimRatio OnFire
-## 22     Mercy Support     Healer, Vulnerable Competitive      0.23   6.3%
-## 6       D.Va    Tank              Disruptor Competitive      3.88  11.1%
-## 30 Reinhardt    Tank          Point Control Competitive      1.87  11.2%
-## 16     Lúcio Support  Healer, Point Control Competitive      1.76  11.8%
-## 48     Zarya    Tank          Point Control Competitive      3.13  13.4%
-## 50  Zenyatta Support     Healer, Vulnerable Competitive      2.04  11.7%
-##    PickRate WinRate Difficulty
-## 22    15.91  52.27%          1
-## 6      6.61  51.50%          2
-## 30     6.22  51.95%          1
-## 16     5.74  50.21%          2
-## 48     5.56  49.57%          3
-## 50     5.27  52.46%          3
+##         Name    Type                   Tags        Mode ElimRatio OnFire PickRate WinRate Difficulty
+## 22     Mercy Support     Healer, Vulnerable Competitive      0.23   6.3%    15.91  52.27%          1
+## 6       D.Va    Tank              Disruptor Competitive      3.88  11.1%     6.61  51.50%          2
+## 30 Reinhardt    Tank          Point Control Competitive      1.87  11.2%     6.22  51.95%          1
+## 16     Lúcio Support  Healer, Point Control Competitive      1.76  11.8%     5.74  50.21%          2
+## 48     Zarya    Tank          Point Control Competitive      3.13  13.4%     5.56  49.57%          3
+## 50  Zenyatta Support     Healer, Vulnerable Competitive      2.04  11.7%     5.27  52.46%          3
+##
 ```
 
 This data frame has a bit more information (`ElimRatio`, `OnFire`, etc.) than I need for the figure I'm going to make so I'll create a smaller data frame with just the hero name, type, and pick rate rankings in each of the play modes. Then I'll populate it with the ranks.
@@ -269,8 +257,8 @@ Defense heroes tend to rank low in both quickplay and competitive play, with a s
 
 Junkrat and Bastion are the only Defense heroes who are tagged on Overbuff as "High Damage". However, Junkrat is chosen fairly often but Bastion is chosen more rarely. Perhaps Bastion needing to remain stationary in sentry mode to deal that high damage is less appealing to players. He's also a very large target, compared to Junkrat. Let's look at Junkrat pick trends over the last 6 months. These were taken from the [Overbuff Junkrat trends page](http://www.overbuff.com/heroes/junkrat/trends).
 
-![](Trends/JunkratQuick.png)
-![](Trends/JunkratComp.png)
+![](Trends/JunkratQuick.PNG)
+![](Trends/JunkratComp.PNG)
 
 A big reason for the popularity of Junkrat may be that the patch released on August 29, 2017 buffed Junkrat by allowing him to hold two mines, increasing his tire movement speed by 30%, and removing the time limit for tire wall-climbing. This led to an increased pick rate in both play modes. Before this patch, Junkrat's pick rate was as low as the other Defense heroes. In addition, the patch on September 19, 2017 released the map Junkertown, located in the Australian Outback. Who to better play on this map than Junkrat, who fits right into the aesthetic? These two recent patches are making him a popular hero choice right now. We'll see how this trend continues in the next few months.
 

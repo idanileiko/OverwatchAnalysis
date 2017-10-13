@@ -270,8 +270,8 @@ Offense heroes are also chosen more in quickplay than in competitive play. More 
 
 Support heroes have a wide range but are ranked realtively high in both play modes, since all match teams benefit from having a healer. In both play modes. Mercy is the top choice. Let's look at her pick rate trends, taken from the [Overbuff Mercy trends page](http://www.overbuff.com/heroes/mercy/trends).
 
-![](Trends/MercyQuick.png)
-![](Trends/MercyComp.png)
+![](Trends/MercyQuick.PNG)
+![](Trends/MercyComp.PNG)
 
 Apart from being one of the healing characters that don't necessarily need to aim well to heal other players (contrasted with Ana), the patch released on September 19, 2017 (about a month before this analysis) fixed problems with Mercy's Resurrect ability by moving it from her ultimate and replacing the ultimate with Valkyrie, which enhances her abilities for 20 seconds. This change was made to prevent Mercy players from staying away from the main fight and instead to encourage her to be around the other teammates during big battles. This change led to a spike in her pick rate in both play modes. A smaller spike can be seen in quickplay mode at the time the Summer Games patch came out, releasing a number of new Mercy skins and victory poses.
 
@@ -279,8 +279,8 @@ Apart from being one of the healing characters that don't necessarily need to ai
 
 Tank heroes are chosen more often for competitive play than for quickplay, maybe because of their high health and ability to take damage from the opposing team. The top choice in both play modes is D.Va, so let's look at her trends, taken from [Overbuff D.Va trends page](http://www.overbuff.com/heroes/dva/trends)
 
-![](Trends/D.VaQuick.png)
-![](Trends/D.VaComp.png)
+![](Trends/D.VaQuick.PNG)
+![](Trends/D.VaComp.PNG)
 
 D.Va pick rate trends have been relatively stable for the past 6 months, with few significant sudden spikes or drops, especially in competitive mode. The September 19, 2017 patch gave a new ability to D.Va, the Micro Missiles, as well as modified her Defense Matrix's resource meter to deplete quicker but regenerate energy faster. This seemed to affect quickplay much more than competitive play. Perhaps she's a popular choice for a Tank hero because of the "second chance" feeling when she loses her Mech but is still alive and can damage the opposing players. On the contrary, the least popular Tank hero, Orisa is not chosen often for quickplay or competitive play. 
 

@@ -23,7 +23,7 @@ library(rvest)
 
 ### Scrape the main page for a list of heroes
 
-The individual hero stats can be found on their own pages. They are available on the main [Overbuff heroes page](https://www.overbuff.com/heroes), but only by clicking through the table, which makes it impossible to extract data using the `rvest` package, which needs a specific, unique URL to access the source data. (Note: if this is untrue, contact me because I'd like to know how it can be done!)
+The individual hero stats can be found on their own pages. They are available on the main [Overbuff heroes page](http://www.overbuff.com/heroes), but only by clicking through the table, which makes it impossible to extract data using the `rvest` package, which needs a specific, unique URL to access the source data. (Note: if this is untrue, contact me because I'd like to know how it can be done!)
 
 
 ```r

@@ -3,7 +3,7 @@
 
 ### Synopsis
 
-The site [Overbuff]("http://www.overbuff.com") has a large amount of statistics on Overwatch. For the purposes of this analysis, I was primarily interested in comparing Hero pick rates in QuickPlay vs. Competitive matches. I scraped the following pieces of data from **PC** games for the **past month**:
+The site [Overbuff](http://www.overbuff.com) has a large amount of statistics on Overwatch. For the purposes of this analysis, I was primarily interested in comparing Hero pick rates in QuickPlay vs. Competitive matches. I scraped the following pieces of data from **PC** games for the **past month**:
 
 * Hero Name & Class Type
 * Stats: Elimination Ratio, On Fire, Pick Rate, and Win Rate
@@ -23,7 +23,7 @@ library(rvest)
 
 ### Scrape the main page for a list of heroes
 
-The individual hero stats can be found on their own pages. They are available on the main [Overbuff heroes page]("https://www.overbuff.com/heroes"), but only by clicking through the table, which makes it impossible to extract data using the `rvest` package, which needs a specific, unique URL to access the source data. (Note: if this is untrue, contact me because I'd like to know how it can be done!)
+The individual hero stats can be found on their own pages. They are available on the main [Overbuff heroes page](https://www.overbuff.com/heroes), but only by clicking through the table, which makes it impossible to extract data using the `rvest` package, which needs a specific, unique URL to access the source data. (Note: if this is untrue, contact me because I'd like to know how it can be done!)
 
 
 ```r

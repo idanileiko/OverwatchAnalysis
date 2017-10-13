@@ -1,3 +1,8 @@
+---
+output: 
+  html_document: 
+    keep_md: yes
+---
 
 ## Overwatch Hero Pick Rate Analysis in R
 
@@ -6,9 +11,9 @@
 The game [Overwatch](http://playoverwatch.com/en-us/) has become increasingly popular, recently reaching [over 30 million players](http://www.pcgamesn.com/overwatch/overwatch-sales-numbers). In this first-person shooter, you play with 5 teammates against another group of 6. Each player gets to choose one of currently 25 heroes to play in a single game. Apart from Arcade or Custom game modes, which won't be visited in this analysis, each team is only allowed one unique hero. So if you pick to play as Tracer, no one else on your team can pick Tracer. These heroes are divided into four types:
 
 * **Offense**: Doomfist, Genji, McCree, Pharah, Reaper, Solder: 76, Sombra, and Tracer
-* **Defense**: Bastion, Hanzo, Junkrat, Mei, TorbjÃ¶rn, and Widowmaker
+* **Defense**: Bastion, Hanzo, Junkrat, Mei, Torbjörn, and Widowmaker
 * **Tank**: D.Va, Orisa, Reinhardt, Roadhog, Winston, and Zarya
-* **Support**: Ana, LÃºcio, Mercy, Symmetra, and Zenyatta
+* **Support**: Ana, Lúcio, Mercy, Symmetra, and Zenyatta
 
 The play modes I'll be looking at in this analysis are the Quickplay mode and the Competitive mode. In quickplay, any player can play as many number of matches as they want, leave after any match, and is more suited to casual play. In competitive play, players have to stay on the same team for a number of matches, are penalized if they continuously leave the game while the matches are still going on, and are given a ranking after 10 placement matches. Players fight to be in the top 500 for each competitive "season", which awards certain bonuses.
 
@@ -22,37 +27,26 @@ The first step was seeking out some pick rate data. Which heroes are chosen for 
 
 The data that will be loaded in for this analysis was scraped from [Overbuff heroes page](http://www.overbuff.com/heroes). The details of this process can be found [here](http://github.com/idanileiko/OverwatchPCPickRateAnalysis/tree/master/Scraper), in the scraper part of this repo.
 
-
+```{r setoptions, echo = FALSE, warning = FALSE}
+library(knitr)
+opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
 
 Load in all the packages that will be used in this analysis.
 
-
-```r
+```{r}
 library(rvest)
 library(ggplot2)
 library(grid)
 ```
 
-
-```r
+```{r}
 # Load in the data frame; change the timestamp date to match the file that is saved
 timestamp <- "10-12-2017"
 filename <- paste0("Heroes_", timestamp, ".Rda")
 load(filename)
 
 str(Heroes)
-```
-
-```
-## 'data.frame':	50 obs. of  8 variables:
-##  $ Name     : chr  "Ana" "Ana" "Bastion" "Bastion" ...
-##  $ Type     : chr  "Support" "Support" "Defense" "Defense" ...
-##  $ Tags     : chr  " Healer" " Healer" " High Damage, Stationary" " High Damage, Stationary" ...
-##  $ Mode     : Factor w/ 2 levels "Competitive",..: 2 1 2 1 2 1 2 1 2 1 ...
-##  $ ElimRatio: num  1.27 1.28 2.59 2.61 3.72 3.88 1.58 1.68 2.43 2.69 ...
-##  $ OnFire   : chr  "7.4%" "11.9%" "14.6%" "20.4%" ...
-##  $ PickRate : chr  "4.07%" "4.60%" "0.70%" "0.64%" ...
-##  $ WinRate  : chr  "100.00%" "43.68%" "99.96%" "50.61%" ...
 ```
 
 ***
@@ -63,16 +57,14 @@ In order to see if these two modes have different hero pick rates, I'm going to 
 
 first, load in all the packages that will be used in this analysis.
 
-
-```r
+```{r}
 library(rvest)
 library(ggplot2)
 library(grid)
 library(reshape2)
 ```
 
-
-```r
+```{r}
 # Convert percentages of pick rate into numeric rates
 Heroes$PickRate <- Heroes$PickRate %>%
   gsub("%", "", .) %>%
@@ -85,8 +77,7 @@ Heroes$Difficulty <- as.factor(c(3, 3, 1, 1, 2, 2, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2,
 
 Now since everything is in one data frame, I'm going to split it into quickplay mode and competitive mode. Then I'm going to make sure it's in decreasing order for pick rates.
 
-
-```r
+```{r}
 # Subset by play mode
 HeroQuick <- subset(Heroes, Mode == "Quickplay")
 HeroComp <- subset(Heroes, Mode == "Competitive")
@@ -96,50 +87,12 @@ HeroQuick <- HeroQuick[order(HeroQuick$PickRate, decreasing = TRUE), ]
 HeroComp <- HeroComp[order(HeroComp$PickRate, decreasing = TRUE), ]
 
 head(HeroQuick)
-```
-
-```
-##          Name    Type                Tags      Mode ElimRatio OnFire
-## 21      Mercy Support  Healer, Vulnerable Quickplay      0.40   6.1%
-## 9       Genji Offense             Flanker Quickplay      2.43  11.8%
-## 17     McCree Offense             Flanker Quickplay      2.13  11.8%
-## 43 Widowmaker Defense              Sniper Quickplay      2.35   8.9%
-## 13    Junkrat Defense         High Damage Quickplay      2.29  14.0%
-## 11      Hanzo Defense              Sniper Quickplay      2.21  12.9%
-##    PickRate WinRate Difficulty
-## 21    14.14 100.00%          1
-## 9      8.71 100.01%          3
-## 17     6.99  99.97%          2
-## 43     6.58 100.02%          2
-## 13     6.02 100.02%          2
-## 11     5.66  99.94%          3
-```
-
-```r
 head(HeroComp)
-```
-
-```
-##         Name    Type                   Tags        Mode ElimRatio OnFire
-## 22     Mercy Support     Healer, Vulnerable Competitive      0.23   6.3%
-## 6       D.Va    Tank              Disruptor Competitive      3.88  11.1%
-## 30 Reinhardt    Tank          Point Control Competitive      1.87  11.2%
-## 16     LÃºcio Support  Healer, Point Control Competitive      1.76  11.8%
-## 48     Zarya    Tank          Point Control Competitive      3.13  13.4%
-## 50  Zenyatta Support     Healer, Vulnerable Competitive      2.04  11.7%
-##    PickRate WinRate Difficulty
-## 22    15.91  52.27%          1
-## 6      6.61  51.50%          2
-## 30     6.22  51.95%          1
-## 16     5.74  50.21%          2
-## 48     5.56  49.57%          3
-## 50     5.27  52.46%          3
 ```
 
 This data frame has a bit more information (`ElimRatio`, `OnFire`, etc.) than I need for the figure I'm going to make so I'll create a smaller data frame with just the hero name, type, and pick rate rankings in each of the play modes. Then I'll populate it with the ranks.
 
-
-```r
+```{r}
 # Create data frame that will be populated with rankings
 HeroList <- (data.frame(Name = character(25), Type = factor(25), RankQuick = numeric(25), RankComp = numeric(25)))
 HeroList$Name <- unique(Heroes$Name)
@@ -153,20 +106,9 @@ for (i in 1:length(HeroList$Name)){
 head(HeroList)
 ```
 
-```
-##       Name    Type RankQuick RankComp
-## 1      Ana Support         9       12
-## 2  Bastion Defense        25       23
-## 3     D.Va    Tank         7        2
-## 4 Doomfist Offense        24       25
-## 5    Genji Offense         2       11
-## 6    Hanzo Defense         6       17
-```
-
 Now that I have the pick rate ranks for both play modes, I'm going to create a scatter plot to see if there's an agreement in the overall heroes chosen for the matches.
 
-
-```r
+```{r}
 # Scatterplot contrasting pick rates in competitive vs. quickplay modes
 p <- ggplot(data = HeroList, aes(x = RankQuick, y = RankComp, color = Type)) +
   geom_abline(intercept = 0, slope = -1, linetype="dashed", size = 1) + geom_point(size = 5) +
@@ -181,23 +123,14 @@ gt$layout$clip[gt$layout$name == "panel"] <- "off"
 grid.draw(gt)
 ```
 
-![](PickRateAnalysis_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
-
 This figure is interesting because it looks like there's a lot of variability between the heroes chosen for competitive play compared to the ones chosen for quickplay. The dashed line shows where the points would fall if the rankings were the same for each hero in the two different play modes. The farther away a hero is from this line, the more of a difference between the pick rate of them in the two play modes. The only hero that has the same pick rate ranking in both play modes is the top chosen hero, Mercy. Heroes that fall on the left side of the line are chosen more in quickplay than in competitive play. Heroes that fall on the right side of the line are chosen more in competitive play than in quickplay.
 
 To be sure of the conclusion that the rankings are very different, let's quantify the relationship by calculating a correlation coefficient. Since this is ranked data, I'm going to use [Kendall's Tau](https://en.wikipedia.org/wiki/Kendall_rank_correlation_coefficient), which considers the numbers of concordant and discordant pairs of ranks in the data.
 
-
-```r
+```{r}
 ranks <- cbind(HeroList$RankQuick, HeroList$RankComp)
 corr <- cor(ranks, method="kendall")
 corr
-```
-
-```
-##      [,1] [,2]
-## [1,] 1.00 0.36
-## [2,] 0.36 1.00
 ```
 
 Indeed, a value of `0.36`, which is far from the perfect correlation of `1`, does not indicate a strong relationship between the rankings. So what's going on? There's a lot to dig through so I'll split this up into different sections.
@@ -206,8 +139,7 @@ Indeed, a value of `0.36`, which is far from the perfect correlation of `1`, doe
 
 Overbuff has a separate page for hero types (roles) and their statistics [here](http://www.overbuff.com/roles). I'll read in that data to visualize the differences in popularity of hero types in the two play modes.
 
-
-```r
+```{r}
 # Read in popularity of hero types in quickplay
 page <- read_html("http://www.overbuff.com/roles")
 types <-  page%>%
@@ -261,8 +193,6 @@ ggplot(data = Types, aes(x = Role, y = Picked, fill = Mode)) +
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
-![](PickRateAnalysis_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
-
 ##### **Defense**
 
 Defense heroes tend to rank low in both quickplay and competitive play, with a slightly higher ranking in quickplay. The exception to this low ranking is Junkrat. Why is he ranked so high compared to the other Defense heroes?
@@ -304,48 +234,18 @@ Now that we looked at the hero types, I want to look at specific heroes that are
 
 Let's calculate the biggest differences in the ranking.
 
-
-```r
+```{r}
 ## Which heroes have the biggest difference?
 HeroList$Diff <- HeroList$RankQuick - HeroList$RankComp
 HeroList <- HeroList[order(HeroList$Diff, decreasing = TRUE), ]
 HeroList
 ```
 
-```
-##           Name    Type RankQuick RankComp Diff
-## 15   Reinhardt    Tank        18        3   15
-## 8        LÃºcio Support        15        4   11
-## 23     Winston    Tank        17        7   10
-## 24       Zarya    Tank        14        5    9
-## 25    Zenyatta Support        13        6    7
-## 3         D.Va    Tank         7        2    5
-## 14      Reaper Offense        19       15    4
-## 12       Orisa    Tank        22       19    3
-## 2      Bastion Defense        25       23    2
-## 10         Mei Defense        23       22    1
-## 17 Soldier: 76 Offense        10        9    1
-## 11       Mercy Support         1        1    0
-## 4     Doomfist Offense        24       25   -1
-## 20    TorbjÃ¶rn Defense        20       21   -1
-## 13      Pharah Offense        12       14   -2
-## 16     Roadhog    Tank        11       13   -2
-## 1          Ana Support         9       12   -3
-## 7      Junkrat Defense         5        8   -3
-## 18      Sombra Offense        21       24   -3
-## 19    Symmetra Support        16       20   -4
-## 9       McCree Offense         3       10   -7
-## 21      Tracer Offense         8       16   -8
-## 5        Genji Offense         2       11   -9
-## 6        Hanzo Defense         6       17  -11
-## 22  Widowmaker Defense         4       18  -14
-```
-
 This ordered data frame shows us which heroes are mostly chosen only for one of the two play modes and which ones have a relatively similar pick rate in both game types. As I noted above, one hero doesn't move ranks at all across game modes: Mercy. 
 
 ##### **Stable Heroes**
 
-There are 11 heroes who only move 1-3 ranks (Orisa, Bastion, Mei, Soldier: 76, Doomfist, TorbjÃ¶rn, Pharah, Roadhog, Ana, Junkrat, and Sombra). Out of these, Junkrat and Soldier: 76 have relatively higher pick rates. Ana, Roadhog, and Pharah have average pick rates. Orisa, Mei, Doomfist, TorbjÃ¶rn, Bastion, and Sombra have relatively low pick rates.
+There are 11 heroes who only move 1-3 ranks (Orisa, Bastion, Mei, Soldier: 76, Doomfist, Torbjörn, Pharah, Roadhog, Ana, Junkrat, and Sombra). Out of these, Junkrat and Soldier: 76 have relatively higher pick rates. Ana, Roadhog, and Pharah have average pick rates. Orisa, Mei, Doomfist, Torbjörn, Bastion, and Sombra have relatively low pick rates.
 
 ##### **Heroes Popular only in Quickplay**
 
@@ -355,7 +255,7 @@ The most extreme of these, Widowmaker, has fairly [stable trends](http://www.ove
 
 ##### **Heroes Popular only in Competitive Play**
 
-The top 5 heroes that are chosen rarely in quickplay but often in competitive mode are (in order) Reinhardt, LÃºcio, Winston, Zarya, Zenyatta. They have variable difficulty levels (assigned by the game itself): 1, 2, 2, 3, and 3, respectively. They are all either supports or tanks, which are preferred by competitive game modes, as seen in the graph.
+The top 5 heroes that are chosen rarely in quickplay but often in competitive mode are (in order) Reinhardt, Lúcio, Winston, Zarya, Zenyatta. They have variable difficulty levels (assigned by the game itself): 1, 2, 2, 3, and 3, respectively. They are all either supports or tanks, which are preferred by competitive game modes, as seen in the graph.
 
 The most extreme of these, Reinhardt, also has fairly [stable trends](http://www.overbuff.com/heroes/reinhardt/trends), with competitive rates being a lot higher.
 

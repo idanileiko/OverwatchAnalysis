@@ -10,7 +10,7 @@ The game [Overwatch](http://playoverwatch.com/en-us/) has become increasingly po
 * **Tank**: D.Va, Orisa, Reinhardt, Roadhog, Winston, and Zarya
 * **Support**: Ana, Lúcio, Mercy, Symmetra, and Zenyatta
 
-The play modes I'll be looking at in this analysis are the Quickplay mode and the Competitive mode. In quickplay, any player can play as many number of matches as they want, leave after any match, and is more suited to casual play. In competitive play, players have to stay on the same team for a number of matches, are penalized if they continuously leave the game while the matches are still going on, and are given a ranking after 10 placement matches. Players fight to be in the top 500 for each competitive "season", which awards certain bonuses.
+The play modes I'll be looking at in this analysis are the Quickplay mode and the Competitive mode. In quickplay, any player can play as many number of matches as they want, leave after any match, and is more suited to casual play. In competitive play, players have to stay on the same team for a number of matches, are penalized if they continuously leave the game while the matches are still going on, and are given a ranking after 10 placement matches. In each competitive "season", players fight to be placed in ranked tiers based on a number between 1 and 5000, which indicates that player's "skill rating".
 
 Since these play modes involve the same types of matches but competitive play has the additional "status" aspect in which players try to be the best, I was wondering how pick rates for certain heroes differ across these play modes. Are certain heroes preferred in quickplay but not competitive (and vice versa)? If so, why?
 
@@ -18,7 +18,7 @@ Since these play modes involve the same types of matches but competitive play ha
 
 ### Load in Hero Data from Overbuff.com
 
-The first step was seeking out some pick rate data. Which heroes are chosen for quickplay matches and which are chosen for competitive matches? I looked at [Overbuff](http://www.overbuff.com), from the PC platform for the past month (September 12, 2017 to October 12, 2017).
+The first step was seeking out some pick rate data. Which heroes are chosen for quickplay matches and which are chosen for competitive matches? I looked at [Overbuff](http://www.overbuff.com), which is a site that gathers Overwatch statistics data and looks at trends over time. The data I used came from the PC platform for the past month (September 12, 2017 to October 12, 2017).
 
 The data that will be loaded in for this analysis was scraped from [Overbuff heroes page](http://www.overbuff.com/heroes). The details of this process can be found [here](http://github.com/idanileiko/OverwatchPCPickRateAnalysis/tree/master/Scraper), in the scraper part of this repo.
 
